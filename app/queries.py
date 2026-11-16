@@ -76,3 +76,18 @@ def get_latest_sell():
             """)
             row=cur.fetchone()
             return row
+
+
+def get_sales(limit:int,offset:int):
+    if (limit>100 or limit<1 or offset<0):
+        raise ValueErrror("Invalid Values!")
+    with psycopg.connect(db_url,row_factory=dict_row) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+            Select * from orders 
+            order by order_date,order_id desc
+            limit %s 
+            offset %s; 
+            """,(limit,offset))
+            rows=cur.fetchall()
+            return rows
