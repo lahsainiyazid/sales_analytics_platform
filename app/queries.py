@@ -53,3 +53,14 @@ def get_avg_val():
                         """)
             rows=cur.fetchall()
             return rows;
+
+def get_rev_by_cat():
+    with psycopg.connect(db_url,row_factory=dict_row) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+            SELECT round(avg(total_amount),2)
+            from orders 
+            group by category ;
+                        """)
+            rows=cur.fetchall()
+            return rows
