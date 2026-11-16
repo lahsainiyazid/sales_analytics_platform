@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from queries import get_all,get_tot_rev,get_num_customers
-app=FastAPI()
+from queries import get_all,get_tot_rev,get_num_customers,get_num_sales,get_avg_val
+app=FastAPI(title="Sales Analytics API")
 
 
 
@@ -19,3 +19,11 @@ def get_total_revenue():
 @app.get("/number_of_customer")
 def get_number_of_customers():
     return get_num_customers()
+
+@app.get("/number_of_sales")
+def get_number_of_sales():
+    return get_num_sales()
+
+@app.get("/avg_value")
+def get_average_order_value():
+    return get_avg_val()
