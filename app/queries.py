@@ -64,3 +64,15 @@ def get_rev_by_cat():
                         """)
             rows=cur.fetchall()
             return rows
+
+def get_latest_sell():
+    with psycopg.connect(db_url) as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+            SELECT *
+            from orders 
+            order by order_date desc 
+            limit 1;
+            """)
+            row=cur.fetchone()
+            return row

@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from queries import (get_all,get_tot_rev,
     get_num_customers,get_num_sales,get_avg_val,
-get_rev_by_cat)
+get_rev_by_cat,
+get_latest_sell)
 app=FastAPI(title="Sales Analytics API")
 
 
@@ -33,3 +34,6 @@ def get_average_order_value():
 @app.get("/revenue_by_category")
 def get_revenue_by_category():
     return get_rev_by_cat()
+@app.get("/latest_sell")
+def latest_sell():
+    return get_latest_sell()
