@@ -58,9 +58,10 @@ def get_rev_by_cat():
     with psycopg.connect(db_url,row_factory=dict_row) as conn:
         with conn.cursor() as cur:
             cur.execute("""
-            SELECT round(avg(total_amount),2)
+            SELECT category,round(sum(total_amount),2) as total_revenue
             from orders 
-            group by category ;
+            group by category 
+            order by total_revenue desc;
                         """)
             rows=cur.fetchall()
             return rows
@@ -80,7 +81,7 @@ def get_latest_sell():
 
 def get_sales(limit:int,offset:int):
     if (limit>100 or limit<1 or offset<0):
-        raise ValueErrror("Invalid Values!")
+        raise ValueError("Invalid Values!")
     with psycopg.connect(db_url,row_factory=dict_row) as conn:
         with conn.cursor() as cur:
             cur.execute("""
